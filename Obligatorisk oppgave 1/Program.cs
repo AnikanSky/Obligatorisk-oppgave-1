@@ -11,12 +11,13 @@ namespace Obligatorisk_oppgave_1
     {
         
         public static int Id { get; private set; }
+        static List<Person> folk = NewMethod();
 
         static void Main(string[] args)
         {
             bool Run = true;
 
-            List<Person> folk = NewMethod();
+            
 
             Console.WriteLine("hallo skriv disse in commandoen vis du trenger info osen dette fungerer");
             Console.WriteLine("hjelp=>");
@@ -46,8 +47,15 @@ namespace Obligatorisk_oppgave_1
                 {
                     var answerId = answer.Substring(3);
                     int x = Int32.Parse(answerId);
+                    
+                    var person = FinnPerson(x);
+                    person.Print();
 
-                    for (var i = 0; i < folk.ToArray().Length; i++)
+                    foreach (var p in folk)
+                    {
+                        if (p.Father == person || p.Mother == person) p.Print();
+                    }
+                    /*for (var i = 0; i < folk.ToArray().Length; i++)
                     {
                         if (folk[i].Id.Equals(x))
                         {
@@ -59,11 +67,24 @@ namespace Obligatorisk_oppgave_1
                                 if (p.Father == parent || p.Mother == parent) p.Print();
                             }
                         }
-                    }
+                    }*/
 
                 }
             }
         }
+
+        private static Person FinnPerson(int x)
+        {
+            for (var i = 0; i < folk.ToArray().Length; i++)
+            {
+                if (folk[i].Id.Equals(x))
+                {
+                    return folk[i];
+                }
+            }
+            return null;
+        }
+
         private static List<Person> NewMethod()
         {
             Person sverreMagnus = new Person(1, "Sverre Magnus", "", 2005);
